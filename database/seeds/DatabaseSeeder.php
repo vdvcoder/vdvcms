@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
+            CategoriesSeeder::class,
+            CouponSeeder::class,
+            ProductSeeder::class
         ]);
     }
 }

@@ -1,19 +1,45 @@
 <?php
 
-Route::redirect('/', '/login');
-Route::get('/home', function () {
-    if (session('status')) {
-        return redirect()->route('admin.home')->with('status', session('status'));
-    }
+// Website/webshop Routes
+//Route::view('/', 'vdvwebshop.index');
 
-    return redirect()->route('admin.home');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+// Shop Routes
+Route::get('shop', 'ShopController@index')->name('shop.index');
+Route::get('shop/{product}', 'ShopController@show')->name('shop.show');
+
+// Cart Routes
+Route::get('cart', 'CartController@index')->name('cart.index');
+Route::post('cart', 'CartController@store')->name('cart.store');
+Route::patch('cart/{product}', 'CartController@update')->name('cart.update');
+Route::delete('cart/{product}', 'CartController@destroy')->name('cart.destroy');
+
+// Coupon code Routes
+Route::post('coupon', 'CouponController@store')->name('coupon.store');
+Route::delete('coupon', 'CouponController@destroy')->name('coupon.destroy');
+
+// Save-for-later (wishlist?) Routes
+Route::post('save-for-later/{product}', 'SaveForLaterController@store')->name('saveforlater.store');
+Route::post('save-for-later/{product}/move-to-cart', 'SaveForLaterController@moveToCart')->name('saveforlater.movetocart');
+Route::delete('save-for-later/{product}', 'SaveForLaterController@destroy')->name('saveforlater.destroy');
+
+// Checkout Routes
+Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
+
 
 Auth::routes();
 Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
-// Admin
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+
+// Admin CMS ROUTES
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'namespace' => 'Admin',
+    'middleware' => ['auth', 'admin']
+], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -111,4 +137,14 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
         Route::post('password', 'ChangePasswordController@update')->name('password.update');
     }
+});
+
+// USERS PROFILE ROUTES
+Route::group([
+    'prefix' => 'user',
+    'as' => 'user.',
+    'namespace' => 'User',
+    'middleware' => ['auth']
+], function () {
+    Route::get('/', 'HomeController@index')->name('home');
 });

@@ -58,4 +58,14 @@ class ProductCategory extends Model implements HasMedia
 
         return $file;
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public static function findBySlug($slug)
+    {
+        return static::where('slug', $slug)->first();
+    }
 }

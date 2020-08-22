@@ -11,13 +11,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
-            $table->longText('description')->nullable();
-            $table->decimal('price', 15, 2)->nullable();
             $table->string('slug')->nullable();
+            $table->string('details')->nullable();
+            $table->decimal('price', 15, 2)->nullable();
+            $table->longText('description')->nullable();
             $table->boolean('featured')->default(0)->nullable();
             $table->boolean('instock')->default(0)->nullable();
             $table->integer('stock')->nullable();
-            $table->string('details')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
