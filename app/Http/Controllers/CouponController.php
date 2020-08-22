@@ -22,11 +22,19 @@ class CouponController extends Controller
             return back()->withErrors('Invalid coupon code. Please try again.');
         }
 
+        if($coupon->amount_left === 0 || $coupon->amount_left === null ){
+            $coupon->delete();
+            return back()->withErrors('Amount of coupon code '. $coupon->code .' is reached.');
+        }
         // dispatch_now(new UpdateCoupon($coupon));
         session()->put('coupon', [
             'name'      => $coupon->code,
             'discount'  => $coupon->discount( (int) Cart::subtotal()),
         ]);
+
+        $coupon = Coupon::findByCode($request->coupon);
+        $coupon->amount_left--;
+        $coupon->save();
 
         return back()->with('success', 'Coupon has been applied!');
     }

@@ -1,48 +1,51 @@
-<div class="item cart">
-    <div class="image">
-        <img src="/images/laptop.jpg">
-    </div>
+<tr>
+    <td>
 
-    <div class="content">
-        <a class="header" href="{{ $item->model->path() }}">
-            {{ $item->name }} 
-            <div class="ui green label">
-                {{ $item->model->present_price }}
-            </div>
-        </a>
-        
+        <figure class="itemside">
+            <div class="aside"><img src="images/items/1.jpg" class="img-sm"></div>
+            <figcaption class="info">
+                <a href="{{ $item->model->path() }}" class="title text-dark">{{ $item->name }}</a>
+                <p class="text-muted small">{{ $item->model->details }}</p>
+            </figcaption>
+        </figure>
+    </td>
+    <td>
+        <select name="quantity" id="quantity" class="quantity form-control" data-id="{{ $item->rowId }}">
+            @foreach (range(1, 5) as $index)
+                <option value="{{ $index }}" @if($item->qty == $index) selected @endif>{{ $index }}</option>
+            @endforeach
+        </select>
+    </td>
+    <td>
+        <div class="price-wrap">
+            <var class="price">{{ $item->model->present_price }}</var>
+        </div> <!-- price-wrap .// -->
+    </td>
+    <td class="text-right">
 
-        <div class="meta">
-            <span class="cinema">{{ $item->model->details }}</span>
-        </div>
+        <a data-save-for-later="{{ $item->rowId }}" title="save-for-later" href="" class="btn btn-light save-for-later" data-toggle="tooltip"> <i class="fa fa-heart"></i></a>
+        <a href="" class="btn btn-light  remove-cart" data-remove-cart="{{ $item->rowId }}"> Remove</a>
+    </td>
+    <form action="{{ route('cart.destroy', $item->rowId) }}" style="display: none" method="POST"
+          id="remove-cart-{{ $item->rowId }}" class="ui left floated">
+        @csrf @method('delete')
+    </form>
 
-        <div class="extra">
-            <button class="ui red tiny button remove-cart" data-remove-cart="{{ $item->rowId }}">
-                <i class="trash icon"></i> Remove
-            </button>
+    <form action="{{ route('saveforlater.store', $item->rowId) }}" style="display: none" method="POST"
+          id="save-for-later-{{ $item->rowId }}" class="ui left floated">
+        @csrf
+    </form>
+</tr>
 
-            <button class="ui tiny button save-for-later" data-save-for-later="{{ $item->rowId }}">
-                <i class="heart icon"></i> Save for Later
-            </button>
 
-            <form action="{{ route('cart.destroy', $item->rowId) }}" style="display: none" method="POST" 
-                id="remove-cart-{{ $item->rowId }}" class="ui left floated">
-                @csrf @method('delete')
-            </form>
 
-            <form action="{{ route('saveforlater.store', $item->rowId) }}" style="display: none" method="POST" 
-                id="save-for-later-{{ $item->rowId }}" class="ui left floated">
-                @csrf
-            </form>
 
-            <div class="ui right floated">
-                <label for="quantity">quantity:</label>
-                <select name="quantity" id="quantity" class="quantity" data-id="{{ $item->rowId }}">
-                    @foreach (range(1, 5) as $index)
-                        <option value="{{ $index }}" @if($item->qty == $index) selected @endif>{{ $index }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+
+
+
+
+

@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-2 col-6">
-                    <a href="http://bootstrap-ecommerce.com" class="brand-wrap">
+                    <a href="#" class="brand-wrap">
                         <img class="logo" src="images/logo.png">
                     </a> <!-- brand-wrap.// -->
                 </div>
@@ -115,25 +115,13 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Fashion</a>
+                    <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Supermarket</a>
+                    <a class="nav-link" href="{{ route('shop.index') }}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Electronics</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Baby &amp Toys</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Fitness sport</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Clothing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Furnitures</a>
+                    <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
         </div> <!-- collapse .// -->

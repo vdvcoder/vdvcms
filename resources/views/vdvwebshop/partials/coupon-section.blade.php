@@ -1,31 +1,18 @@
-@if(session()->has('coupon'))
-
-    <div class="ui small header">You have used the coupon below.</div>
-
-    <div class="ui large blue label">
-        {{ session('coupon')['name'] }}
-        <i class="delete icon" onclick="document.getElementById('remove-coupon').submit()"></i>
-
-        <form action="{{ route('coupon.destroy') }}" id="remove-coupon" method="POST" style="display: none">
-            @csrf @method('DELETE')
-        </form>
-    </div>
-
-@else
-
-    <div class="ui small header">Do you have a coupon code?</div>
-
-    <form class="ui form" action="{{ route('coupon.store') }}" method="POST">
-        @csrf
-
-        <div class="three fields">
-            <div class="field">
-                <input type="text" name="coupon" placeholder="Coupon Code" required>
-            </div>
-            <div class="field">
-                <button class="ui button" type="submit">Apply Code</button>
-            </div>
-        </div>
-    </form>
-
+@if(!session()->has('coupon'))
+    <div class="card mb-3">
+        <div class="card-body">
+            <form action="{{ route('coupon.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label>Have coupon?</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="coupon" placeholder="Coupon code">
+                        <span class="input-group-append">
+							<button class="btn btn-primary" type="submit">Apply</button>
+						</span>
+                    </div>
+                </div>
+            </form>
+        </div> <!-- card-body.// -->
+    </div>  <!-- card .// -->
 @endif

@@ -12,17 +12,17 @@ Route::get('shop/{product}', 'ShopController@show')->name('shop.show');
 // Cart Routes
 Route::get('cart', 'CartController@index')->name('cart.index');
 Route::post('cart', 'CartController@store')->name('cart.store');
-Route::patch('cart/{product}', 'CartController@update')->name('cart.update');
-Route::delete('cart/{product}', 'CartController@destroy')->name('cart.destroy');
+Route::patch('cart/{id}', 'CartController@update')->name('cart.update');
+Route::delete('cart/{id}', 'CartController@destroy')->name('cart.destroy');
 
 // Coupon code Routes
 Route::post('coupon', 'CouponController@store')->name('coupon.store');
 Route::delete('coupon', 'CouponController@destroy')->name('coupon.destroy');
 
 // Save-for-later (wishlist?) Routes
-Route::post('save-for-later/{product}', 'SaveForLaterController@store')->name('saveforlater.store');
-Route::post('save-for-later/{product}/move-to-cart', 'SaveForLaterController@moveToCart')->name('saveforlater.movetocart');
-Route::delete('save-for-later/{product}', 'SaveForLaterController@destroy')->name('saveforlater.destroy');
+Route::post('save-for-later/{id}', 'SaveForLaterController@store')->name('saveforlater.store');
+Route::post('save-for-later/{id}/move-to-cart', 'SaveForLaterController@moveToCart')->name('saveforlater.movetocart');
+Route::delete('save-for-later/{id}', 'SaveForLaterController@destroy')->name('saveforlater.destroy');
 
 // Checkout Routes
 Route::get('checkout', 'CheckoutController@index')->name('checkout.index');

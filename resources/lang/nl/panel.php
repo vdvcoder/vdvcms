@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'LaraCMS',
+    'site_title' => 'VDVCMS',
 ];

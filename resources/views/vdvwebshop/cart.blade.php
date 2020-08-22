@@ -2,110 +2,63 @@
 
 @section('content')
 
-<div class="ui container masthead">
+    <!-- ========================= SECTION PAGETOP ========================= -->
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page">Shopping cart</h2>
+        </div> <!-- container //  -->
+    </section>
+    <!-- ========================= SECTION INTRO END// ========================= -->
 
-    <div class="ui breadcrumb">
-        <a href="{{ route('home') }}" class="section">Home</a>
-        <i class="right angle icon divider"></i>
-        <a class="active section">Cart</a>
-    </div>
-
-</div>
-
-<div class="ui divider"></div>
-
-<div class="ui vertical segment product">
-    <div class="ui grid container">
-
-        <div class="twelve wide column">
+    <!-- ========================= SECTION CONTENT ========================= -->
+    <section class="section-content padding-y">
+        <div class="container">
 
             @include('vdvwebshop.partials.alert-message')
 
-            @if(Cart::count())
+            <div class="row">
+                <main class="col-md-9">
+                    <div class="card">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                            <tr class="small text-uppercase">
+                                <th scope="col">Product</th>
+                                <th scope="col" width="120">Quantity</th>
+                                <th scope="col" width="120">Price</th>
+                                <th scope="col" class="text-right" width="200"> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if(Cart::count())
+                                @foreach (Cart::content() as $item)
+                                    @include('vdvwebshop.partials.cart-item')
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
 
-                <h1 class="ui header">{{ Cart::count() }} item(s) in our shopping cart</h1>
-                <p class="lead">You have some items in yout cart</p>
-
-                <div class="ui hidden divider"></div>
-
-                <div class="ui divided items">
-
-                    @foreach (Cart::content() as $item)
-
-                        @include('vdvwebshop.partials.cart-item')
-
-                    @endforeach
-
-                </div>
-
-                @include('vdvwebshop.partials.coupon-section')
-
-                <div class="ui divider"></div>
-
-                <div class="ui grid">
-                    <div class="two column row">
-                        <div class="column">
-                            Shipping is free because we our company is awesome. :)
+                        <div class="card-body border-top">
+                            <a href="{{ route('checkout.index') }}" class="btn btn-primary float-md-right"> Make Purchase <i class="fa fa-chevron-right"></i> </a>
+                            <a href="{{ route('shop.index') }}" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continue shopping </a>
                         </div>
-                        <div class="column right aligned">
-                            <table class="ui cart-amount">
-                                <tbody>
-                                    <tr>
-                                        <td>Subtotal:</td>
-                                        <td>{{ $subtotal }}</td>
-                                    </tr>
+                    </div> <!-- card.// -->
 
-                                    @if(session()->has('coupon'))
-                                        <tr>
-                                            <td>Discount ({{ $code }}):</td>
-                                            <td>{{ $discount }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>New Subtotal:</td>
-                                            <td>{{ $newSubtotal }}</td>
-                                        </tr>
-                                    @endif
-
-                                    <tr>
-                                        <td>Tax ({{ $tax }}):</td>
-                                        <td>{{ $newTax }}</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><h4 class="ui header">Total:</h2></td>
-                                        <td><h4 class="ui header">{{ $newTotal }}</h4></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="alert alert-success mt-3">
+                        <p class="icontext"><i class="icon text-success fa fa-truck"></i> Free Delivery because we are cool!</p>
                     </div>
-                </div>
 
-                <div class="ui divider"></div>
+                </main> <!-- col.// -->
 
-                <div>
-                    <a href="{{ route('shop.index') }}" class="ui button">
-                        <i class="shopping cart icon"></i> Continue Shopping
-                    </a>
-                    <a href="{{ route('checkout.index') }}" class="ui right floated primary button">
-                        <i class="cc visa icon"></i> Procced to Checkout
-                    </a>
-                </div>
+                <aside class="col-md-3">
 
-            @else
+                    @include('vdvwebshop.partials.coupon-section')
 
-                <h1 class="ui header">No items in the cart!</h1>
-                <p class="lead">Try exploring shop section and add ptoducts</p>
+                    @include('vdvwebshop.partials.price')
 
-                <a class="ui button" href="{{ route('shop.index') }}">
-                    <i class="shopping cart icon"></i>
-                    Continue Shopping
-                </a>
+                </aside> <!-- col.// -->
+            </div>
 
-            @endif
 
-            <div class="ui divider"></div>
 
             @if(Cart::instance('saveForLater')->count())
 
@@ -125,22 +78,16 @@
                     @endforeach
 
                 </div>
-
-            @else
-
-                <h1 class="ui header">No items saved for later!</h1>
-                <p class="lead">Try exploring shop section and add products</p>
-
             @endif
 
-        </div>
+            <div class="divider"></div>
 
-    </div>
-</div>
+            @include('vdvwebshop.partials.might-like')
 
-<div class="divider"></div>
 
-@include('vdvwebshop.partials.might-like')
 
+        </div> <!-- container .//  -->
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
 
 @endsection
